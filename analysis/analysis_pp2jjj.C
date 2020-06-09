@@ -1,4 +1,16 @@
 
+std::vector<double> create_data_point_x(std::vector<double> v)
+{   
+    double x;
+    std::vector<double> v_x;
+    for (int i = 0; i < v.size()-1; ++i)
+    {
+        x = 0.5*(v.at(i) + v.at(i+1));
+        v_x.push_back(x);
+    }
+    return v_x;
+};
+
 int analysis_pp2jjj()
 {
     static const double etacut = 5.2;  // -a<.<a
@@ -28,10 +40,9 @@ int analysis_pp2jjj()
     int n_events;
     n_events = myReader.GetEntries(1);
 
-    const Int_t n_bin_x = 8;
-    double x_bin[n_bin_x+1] = {10., 30., 40., 50., 60., 70., 80., 90., 100};
+    std::vector<double> x_bin{10., 30., 40., 50., 60., 70., 80., 90., 100};
 
-    TH2F* h_response = new TH2F("Response", "Response", n_bin_x, x_bin, 20, 0, 2);
+    TH2F* h_response = new TH2F("Response", "Response", x_bin.size()-1, &x_bin[0], 20, 0, 2);
 
     double ratio;
     // Loop over Events
@@ -56,14 +67,14 @@ int analysis_pp2jjj()
 
     }
 
-    double v_x[8] = {20., 35., 45., 55., 65., 75., 85., 95.};
+    auto v_x = create_data_point_x(x_bin);
     std::vector<double> v_y;    
     for(int i = 0; i < 8; ++i){
         auto projection = h_response->ProjectionY("10_30", i+1, i+1);
         v_y.push_back(projection->GetMean());
     }
 
-    TGraph* graph = new TGraph(8, v_x, &v_y[0]);
+    TGraph* graph = new TGraph(8, &v_x[0], &v_y[0]);
     outfile->cd();
     graph->Write();
     h_response->Write();
