@@ -1,7 +1,7 @@
 
 int analysis_pp2jjj() 
 {
-    int a[]={50,60}; // pT range of genjets
+    int a[]={50,100}; // pT range of genjets
     const Int_t n = (a[1]-a[0]);
     static const double etacut = 2;  // -a<.<a
     
