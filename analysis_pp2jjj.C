@@ -7,7 +7,7 @@ int analysis_pp2jjj()
     
     int nthreads = 4;
     ROOT::EnableImplicitMT(nthreads);
-    TString infile = "tag_1_delphes_events.root";
+    TString infile = "../Data/tag_1_delphes_events.root";
     auto file = new TFile(infile);
     TTreeReader myReader("Delphes", file);
 
