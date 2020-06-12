@@ -15,7 +15,7 @@ ROOT.gROOT.SetBatch(True)
 
 # Declare a human-readable label for each variable
 labels = {
-        "jet_response_with_jes_correction": "Jet p_{T} / GeV",
+        "jet_response_with_jes_correction": "Jet p_{T} [GeV]",
         #"jet_response_wo_jes_correction": "Jet p_{T} / GeV",
         }
 
@@ -120,11 +120,11 @@ def main(path, output, variable):
     # Draw histograms
     jet_response_with_jes_correction.SetMarkerStyle(4)
     jet_response_with_jes_correction.SetMarkerSize(0.8)
-    jet_response_with_jes_correction.SetLineColor(ROOT.kBlack)
+    jet_response_with_jes_correction.SetMarkerColor(ROOT.kBlue)
 
     c = ROOT.TCanvas("", "", 600, 600)
     jet_response_with_jes_correction.Draw("AP")
-    name = jet_response_with_jes_correction.GetTitle()
+    name = "jet_response_with_jes_correction"
     if name in labels:
         title = labels[name]
     else:
@@ -137,7 +137,8 @@ def main(path, output, variable):
     # Add legend
     legend = ROOT.TLegend(0.4, 0.73, 0.90, 0.88)
     legend.SetNColumns(2)
-    legend.AddEntry(jet_response_with_jes_correction, "Jet Energy Responses with JES Correction", "pl")
+    legend1 = legend.AddEntry(jet_response_with_jes_correction, "Jet Energy Responses with JES Correction", "pl")
+    legend1.SetTextColor(jet_response_with_jes_correction.GetMarkerColor())
     # legend.AddEntry(ZLL, "Z#rightarrowll", "f")
     # legend.AddEntry(W, "W+jets", "f")
     # legend.AddEntry(TT, "t#bar{t}", "f")
